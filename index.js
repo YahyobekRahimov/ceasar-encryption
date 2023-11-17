@@ -40,16 +40,17 @@ function decryptMessage(message, key) {
     key = Number(key);
     newArr = [];
     let messageArr = message.split('');
-    let startFrom = 'right';
+    let startFrom;
     if (messageArr.length % 2 == 0) {
         startFrom = 'left';
+    } else if (messageArr.length % 2 == 1) {
+        startFrom = 'right';
     }
     if (startFrom == 'right') {
         let j = 0;
         let h = 0;
         for (let i = 0; i < messageArr.length; i++) {
-            const element = messageArr[i];
-            if (i % 2 == 1) {
+            if (i % 2 == 0) {
                 newArr.unshift(messageArr[messageArr.length - 1 - j]);
                 j++;
             } else {
@@ -61,7 +62,6 @@ function decryptMessage(message, key) {
         let j = 0;
         let h = 0;
         for (let i = 0; i < messageArr.length; i++) {
-            const element = messageArr[i];
             if (i % 2 == 1) {
                 newArr.unshift(messageArr[messageArr.length - 1 - j]);
                 j++;
@@ -70,6 +70,8 @@ function decryptMessage(message, key) {
                 h++;
             }
         }
+    } else {
+        throw new Error('Dontknow')
     }
     let result = [];
     newArr.forEach((element) => {

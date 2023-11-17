@@ -1,11 +1,15 @@
-const message = 'MyPassword';
 let fullAlphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-
+const regex = /[^a-zA-Z]/;
 function encryptMessage(message, key) {
     key = Number(key);
     let messageArr = message.split('');
     let result = [];
-    messageArr.forEach((element) => {
+    for (let i = 0; i < messageArr.length; i++) {
+        const element = messageArr[i];
+        if (!isNaN(element) || regex.test(element)) {
+            result.push(element)
+            continue;
+        }
         let isUpperCase = false;
         if (!fullAlphabet.includes(element)) {
             isUpperCase = true;
@@ -15,7 +19,7 @@ function encryptMessage(message, key) {
         indexInAlphabet = indexInAlphabet > 26 ? indexInAlphabet - 26 : indexInAlphabet; 
         let changedTo = isUpperCase ? fullAlphabet[indexInAlphabet].toUpperCase() : fullAlphabet[indexInAlphabet];
         result.push(changedTo);
-    })
+    }
     let newArr = [];
     result.forEach((element, index) => {
         if (element === element.toLowerCase()) {
@@ -74,7 +78,12 @@ function decryptMessage(message, key) {
         throw new Error('Dontknow')
     }
     let result = [];
-    newArr.forEach((element) => {
+    for (let i = 0; i < newArr.length; i++) {
+        const element = newArr[i];
+        if (!isNaN(element) || regex.test(element)) {
+            result.push(element);
+            continue;
+        }
         let isUpperCase = false;
         if (!fullAlphabet.includes(element)) {
             isUpperCase = true;
@@ -83,8 +92,8 @@ function decryptMessage(message, key) {
         indexInAlphabet -= key;
         indexInAlphabet = indexInAlphabet < 0 ? indexInAlphabet + 26 : indexInAlphabet; 
         let changedTo = isUpperCase ? fullAlphabet[indexInAlphabet].toUpperCase() : fullAlphabet[indexInAlphabet];
-        result.push(changedTo);
-    })
+        result.push(changedTo);  
+    }
     return result.join('');
 }
 
@@ -105,7 +114,6 @@ ENCRYPTION_SUBMIT.addEventListener('click', function() {
     const regex = /[^a-zA-Z]/;
     if (regex.test(ENCRYPTION_MESSAGE.value)) {
         OUTPUT.innerHTML = 'Avoid characters that are not letters';
-        return;
     }
     OUTPUT.innerHTML = encryptMessage(ENCRYPTION_MESSAGE.value, ENCRYPTION_KEY.value);
 })

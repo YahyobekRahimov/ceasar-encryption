@@ -2,6 +2,7 @@ const message = 'MyPassword';
 let fullAlphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
 function encryptMessage(message, key) {
+    key = Number(key);
     let messageArr = message.split('');
     let result = [];
     messageArr.forEach((element) => {
@@ -36,6 +37,7 @@ function encryptMessage(message, key) {
 
 
 function decryptMessage(message, key) {
+    key = Number(key);
     newArr = [];
     let messageArr = message.split('');
     let startFrom = 'right';
@@ -84,5 +86,28 @@ function decryptMessage(message, key) {
     return result.join('');
 }
 
-console.log(encryptMessage('HowAreYouDoing', 10));
-console.log(decryptMessage(`qsNyoKyRgbIeyx  `, 10));
+const ENCRYPTION_MESSAGE = document.getElementById('encrypt-message');
+const ENCRYPTION_KEY = document.getElementById('encryption-key');
+const ENCRYPTION_SUBMIT = document.getElementById('encrypt-submit');
+const DECRYPTION_MESSAGE = document.getElementById('decrypt-message');
+const DECRYPTION_KEY = document.getElementById('decrypt-key');
+const DECRYPTION_SUBMIT = document.getElementById('decrypt-submit');
+
+const OUTPUT = document.querySelector('.output');
+
+ENCRYPTION_SUBMIT.addEventListener('click', function() {
+    if (!ENCRYPTION_MESSAGE.value) {
+        OUTPUT.innerHTML = 'Enter a valid message';
+        return;
+    } 
+    const regex = /[^a-zA-Z]/;
+    if (regex.test(ENCRYPTION_MESSAGE.value)) {
+        OUTPUT.innerHTML = 'Avoid characters that are not letters';
+        return;
+    }
+    OUTPUT.innerHTML = encryptMessage(ENCRYPTION_MESSAGE.value, ENCRYPTION_KEY.value);
+})
+
+DECRYPTION_SUBMIT.addEventListener('click', function() {
+    OUTPUT.innerHTML = decryptMessage(DECRYPTION_MESSAGE.value, DECRYPTION_KEY.value);
+})

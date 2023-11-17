@@ -21,21 +21,30 @@
             font-size: 2rem;
         }
 
+        @media (max-width: 560px) {
+            html {
+                font-size: 14px;
+            }
+        }
+        @media (max-width: 375px) {
+            html {
+                font-size: 10px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="encrypt">
         <input type="text" id="encrypt-message" placeholder="Message...">
-        <input type="text" id="key" placeholder="Key...">
+        <input type="text" id="encryption-key" placeholder="Key...">
         <input type="button" id="encrypt-submit" value="Encrypt">
-        <div class="encrypted"></div>
     </div>
     <div class="decrypt">
         <input type="text" id="decrypt-message" placeholder="Message...">
-        <input type="text" id="key"  placeholder="Key...">
+        <input type="text" id="decrypt-key"  placeholder="Key...">
         <input type="button" id="decrypt-submit" value="Decrypt">
-        <div class="decrypted"></div>
     </div>
+    <div class="output"></div>
 </body>
 <script src="./index.js"></script>
 </html>
